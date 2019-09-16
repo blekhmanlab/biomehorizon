@@ -599,6 +599,9 @@ prepanel <- function(otudata, metadata=NA, taxonomydata=NA,
         band.thickness <- function(y) {
           max((abs(y - origin(y))), na.rm=TRUE) / nbands
         }
+      } else {
+        # If function is supplied, reset its environment
+        environment(band.thickness) <- environment()
       }
     }
   }
