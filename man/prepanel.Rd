@@ -35,7 +35,7 @@ specification. \item A vector where each element contains the entire
 taxonomy for an OTU, with taxonomic levels separated by semicolons. The
 order of this vector should match the order of OTU IDs specified in
 \code{otudata}. } Taxonomic levels should start from Kingdom and can go as
-far as Species. Defaults to \code{NA} (do not label by taxonomy).}
+far as Subspecies. Defaults to \code{NA} (do not label by taxonomy).}
 
 \item{thresh_prevalence}{numeric threshold for OTU filtering. Minimum \% of
 total samples in which OTU must be present to be included in analysis
