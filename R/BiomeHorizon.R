@@ -1174,12 +1174,12 @@ horizonaes <- function(title=NA, subtitle=NA, xlabel=NA, ylabel=NA, showColorLeg
       legendTitle <- ifelse(legendPosition %in% c("bottom","top"), "Band Colorscale", "Band\nColorscale")
     }
     if(legendPosition %in% c("bottom","top")) {
-      showColorLegend <- guides(fill=guide_legend(title=legendTitle,label=ifelse(isFALSE(showLegendLabels),FALSE,TRUE),label.position="bottom",nrow=1,reverse=TRUE))
+      showColorLegend <- ggplot2::guides(fill=ggplot2::guide_legend(title=legendTitle,label=ifelse(isFALSE(showLegendLabels),FALSE,TRUE),label.position="bottom",nrow=1,reverse=TRUE))
     } else {
-      showColorLegend <- guides(fill=guide_legend(title=legendTitle,label=ifelse(isFALSE(showLegendLabels),FALSE,TRUE)))
+      showColorLegend <- ggplot2::guides(fill=ggplot2::guide_legend(title=legendTitle,label=ifelse(isFALSE(showLegendLabels),FALSE,TRUE)))
     }
   } else {
-    showColorLegend <- guides(fill=FALSE)
+    showColorLegend <- ggplot2::guides(fill=FALSE)
   }
 
   if(is.null(col.bands) || NA %in% col.bands) {
