@@ -304,7 +304,7 @@ prepanel <- function(otudata, metadata=NA, taxonomydata=NA,
       stop("singleVarOTU must specify only one OTU")
     }
     if(!(NA %in% subj) & length(subj)==1) {
-      stop("Cannot perform single OTU analysis with just one subject selected for filtering - either set subj=NA or singleVarOTU=NA.")
+      warning("Did you mean to perform single OTU analysis with just one subject selected? Set singleVarOTU=NA to display multiple OTUs.")
     }
     if(length(otulist) != 1 || !is.na(otulist)) {
       stop("Cannot perform single OTU analysis with OTUs manually selected - either set otulist=NA or singleVarOTU=NA")
