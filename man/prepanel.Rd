@@ -4,13 +4,28 @@
 \alias{prepanel}
 \title{Preliminary Data Cleaning and Preperation}
 \usage{
-prepanel(otudata, metadata = NA, taxonomydata = NA,
-  thresh_prevalence = 80, thresh_abundance = 0.5,
-  thresh_abundance_override = NA, thresh_NA = 5,
-  regularInterval = NA, maxGap = NA, minSamplesPerFacet = 2,
-  otulist = NA, subj = NA, singleVarOTU = NA, band.thickness = NA,
-  origin = NA, facetLabelsByTaxonomy = FALSE, customFacetLabels = NA,
-  interpolate_NA = TRUE, formatStep = FALSE, nbands = 4)
+prepanel(
+  otudata,
+  metadata = NA,
+  taxonomydata = NA,
+  thresh_prevalence = 80,
+  thresh_abundance = 0.5,
+  thresh_abundance_override = NA,
+  thresh_NA = 5,
+  regularInterval = NA,
+  maxGap = NA,
+  minSamplesPerFacet = 2,
+  otulist = NA,
+  subj = NA,
+  singleVarOTU = NA,
+  band.thickness = NA,
+  origin = NA,
+  facetLabelsByTaxonomy = FALSE,
+  customFacetLabels = NA,
+  interpolate_NA = TRUE,
+  formatStep = FALSE,
+  nbands = 4
+)
 }
 \arguments{
 \item{otudata}{Data frame representing OTU Table. Assumes first column

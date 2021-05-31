@@ -4,10 +4,20 @@
 \alias{horizonaes}
 \title{Add Custom Aesthetics to the Horizon Plot}
 \usage{
-horizonaes(title = NA, subtitle = NA, xlabel = NA, ylabel = NA,
-  showColorLegend = TRUE, showLegendLabels = TRUE,
-  legendPosition = "right", legendTitle = NA, showPlotLabels = TRUE,
-  col.bands = NA, col.outline = "#CCCCCC", col.border = "#CCCCCC")
+horizonaes(
+  title = NA,
+  subtitle = NA,
+  xlabel = NA,
+  ylabel = NA,
+  showColorLegend = TRUE,
+  showLegendLabels = TRUE,
+  legendPosition = "right",
+  legendTitle = NA,
+  showPlotLabels = TRUE,
+  col.bands = NA,
+  col.outline = "#CCCCCC",
+  col.border = "#CCCCCC"
+)
 }
 \arguments{
 \item{title}{character. The text for the title.}
