@@ -1,7 +1,7 @@
 #' Sample OTU table
 #'
 #' Sample OTU-format table with 34 subjects. Sequences are from metagenomic data, not 16S,
-#' so the first variable contains IDs assigned to each microbial sequence rather than OTUs. 
+#' so the first variable contains unique IDs assigned to each microbial sequence rather than OTUs. 
 #' Each subsequent column represents a unique sample collected at a specific time
 #' from one of 34 subjects' microbiomes. Entries represent number of reads per sample 
 #' per microbial taxon.

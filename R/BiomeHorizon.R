@@ -462,9 +462,9 @@ prepanel <- function(otudata, metadata=NA, taxonomydata=NA,
     otudata <- otudata %>% dplyr::filter(otuid == singleVarOTU)
   }
 
-  # Covert otudata format for single variable analysis
+  # Covert otudata format for single variable analysis. Remove extra metadata columns
   if(!is.na(singleVarOTU)) {
-    samplenames <- metadata %>% dplyr::select(-collection_date) %>% dplyr::group_by(subject) %>% dplyr::mutate(row_id=1:dplyr::n()) %>% dplyr::ungroup() %>% tidyr::spread(subject,sample) %>% dplyr::select(-row_id) %>% t() %>% as.data.frame() %>% tibble::rowid_to_column("otuid")
+    samplenames <- metadata %>% dplyr::select(subject, sample) %>% dplyr::group_by(subject) %>% dplyr::mutate(row_id=1:dplyr::n()) %>% dplyr::ungroup() %>% tidyr::spread(subject,sample) %>% dplyr::select(-row_id) %>% t() %>% as.data.frame() %>% tibble::rowid_to_column("otuid")
     ids <- samplenames$otuid
     samplenames <- samplenames %>% dplyr::select(-otuid)
     otudata <- matrix(otudata[1,][c(as.matrix(samplenames))],nrow(samplenames)) %>% as.data.frame() %>% dplyr::mutate(otuid=ids) %>% dplyr::select(otuid,everything())
@@ -998,7 +998,7 @@ horizonplot <- function(parameterList, aesthetics=horizonaes()) {
     geom_area(aes(x = as.numeric(day), y = value, fill=band), position="identity", color=col.outline) +
     scale_fill_manual(values=col.bands,breaks=names(col.bands)[c((2*nbands):(1+nbands),nbands:1)],labels=c(paste("+",nbands:1,sep=""),(-1):(-1*nbands))) +
     theme_bw() +
-    theme(axis.text.x=element_text(size=16), axis.text.y=element_blank(), axis.ticks.y=element_blank(), panel.grid=element_blank(), panel.border=element_rect(color=col.border), strip.text.y=element_text(angle=180), panel.spacing.y=unit(0, units="cm"), legend.position=legendPosition) +
+    theme(axis.text.x=element_text(size=16), axis.text.y=element_blank(), axis.ticks.y=element_blank(), panel.grid=element_blank(), panel.border=element_rect(color=col.border), strip.text.y.left=element_text(angle=0), panel.spacing.y=unit(0, units="cm"), legend.position=legendPosition) +
     scale_y_continuous(expand = c(0,0)) + scale_x_continuous(expand = c(0,0)) + # remove margins between plot and panel
     xlab(ifelse(is.na(timestamps), "Sample", "Day")) +
     ylab(element_blank())
