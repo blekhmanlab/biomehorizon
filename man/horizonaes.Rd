@@ -84,11 +84,13 @@ This function provides an easy way to add the most common aesthetics to the
 horizon plot, but if you want to add other aesthetics not included in this
 function, you can do so by appending them to the horizon plot object using
 the \code{+} operator. e.g. to add a gray background in the plotting area:\cr
-\code{horizonplot(prepanel(otusample, metadatasample, taxonomysample,
-subj="subject_1")) + theme(panel.background = element_rect(fill="gray90"))}
+\code{horizonplot(prepanel(otudata = otusample_diet, 
+metadata = metadatasample_diet, taxonomydata = taxonomysample_diet, 
+subj = "MCTs01")) + theme(panel.background = element_rect(fill="gray90"))}
 }
 \examples{
-plist <- prepanel(otusample, metadatasample, taxonomysample, subj = "subject_2")
+plist <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, 
+taxonomydata = taxonomysample_diet, subj = "MCTs01")
 
 # By default, the function is called with no arguments to use default aesthetics
 horizonplot(plist, horizonaes())

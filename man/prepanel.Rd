@@ -222,46 +222,47 @@ timepoint across multiple individuals, rather than multiple OTUs or taxa.
 \examples{
 # Pass just the OTU table to prepanel, and it will assume all samples belong
 # to the same subject.
-prepanel(otusample)
+prepanel(otusample = otusample_diet)
 
 # Supplement metadata and a subject name, and it will select samples from
 # just one subject (this is what you should do with more than one subject).
-prepanel(otusample, metadatasample, subj="subject_1")
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01")
 
 # Pass taxonomydata to prepanel if you want to label facets by taxonomy
 # rather than by OTU ID.
-prepanel(otusample, metadatasample, taxonomysample, subj="subject_1",
-facetLabelsByTaxonomy=TRUE)
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+taxonomydata = taxonomysample_diet, subj="MCTs01", facetLabelsByTaxonomy=TRUE)
 
 # OTU filtering using both a prevalence and an abundance standard (default)
-prepanel(otusample, metadatasample, subj="subject_2", thresh_prevalence=75,
-thresh_abundance=0.75)
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01", 
+thresh_prevalence=75, thresh_abundance=0.75)
 
 # OTU filtering using just an abundance standard
-prepanel(otusample, metadatasample, subj="subject_2", thresh_prevalence=NA,
-thresh_abundance=0.75)
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01",
+thresh_prevalence=NA, thresh_abundance=0.75)
 
 # If an OTU's average abundance reaches a high enough threshold, override
 # other standards and include it in analysis
-prepanel(otusample, metadatasample, subj="subject_2", thresh_prevalence=90,
-thresh_abundance=0.75, thresh_abundance_override=1.5)
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01", 
+thresh_prevalence=90, thresh_abundance=0.75, thresh_abundance_override=1.5)
 
 # Filter OTUs where >2\% samples are NA values
-prepanel(otusample, metadatasample, subj="subject_2", thresh_NA=2)
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01", 
+thresh_NA=2)
 
 # You can also manually select OTUs by OTU ID
-prepanel(otusample, metadatasample, subj="subject_2",
-otulist=c("otu_1000","otu_1243","otu_1530","otu_6821","otu_7737"))
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01",
+otulist=c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 
 # Manual selection can be used to specify the order OTUs will appear on
 # the horizon plot. For example, these two datasets have identical OTUs, but
 # they are ordered differently.
-params <- prepanel(otusample, metadatasample, subj="subject_1",
-thresh_prevalence=95, thresh_abundance=1.5)
+params <- prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+subj="MCTs01", thresh_prevalence=95, thresh_abundance=1.5, 
+otulist=c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 params[[1]]$otuid
-params <- prepanel(otusample, metadatasample, subj="subject_1",
-otulist=c("otu_2526","otu_1530", "otu_7737", "otu_6821", "otu_3773",
-"otu_2457", "otu_1243", "otu_2378"))
+params <- prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+subj="MCTs01", otulist=c("taxon 10", "taxon 2", "taxon 1", "taxon 14"))
 params[[1]]$otuid
 
 # The origin and band.thickness variables can be set to either a numeric
@@ -269,10 +270,11 @@ params[[1]]$otuid
 # on its sample values.
 
 # Use a fixed origin of 5\% for all OTU subpanels
-prepanel(otusample, metadatasample, subj="subject_1", origin=5)
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+subj="MCTs01", origin=5)
 
 # Evaluate a different origin for each OTU subpanel using a custom function
-prepanel(otusample, metadatasample, subj="subject_1",
-origin=function(y){mad(y, na.rm=TRUE)})
+prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+subj="MCTs01", origin=function(y){mad(y, na.rm=TRUE)})
 
 }
