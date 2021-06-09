@@ -1,10 +1,10 @@
 Package: biomehorizon
-Title: Plot Microbiome Time Series 
-Version: 0.0.1.0000
+Title: Plot Microbiome Time Series
+Version: 1.0.0.0000
 Authors@R: person("Isaac", "Fink", email = "isaacfink21@gmail.com", role = c("aut", "cre"))
-Description: This package provides a toolset for visualizing longitudinal microbiome data with a horizon 
-  plot. A horizon plot provides a compact method to display change in the distribution of microbial taxa 
-  over time. This method is valuable for highlighting changes in individual taxa, but more importantly, 
+Description: This package provides a toolset for visualizing longitudinal microbiome data with a horizon
+  plot. A horizon plot provides a compact method to display change in the distribution of microbial taxa
+  over time. This method is valuable for highlighting changes in individual taxa, but more importantly,
   emphasizes broad trends among groups of taxa. This package can also be used to visualize other types of
   longitudinal data.
 Depends: R (>= 3.5.2)
@@ -16,7 +16,7 @@ Imports:
   magrittr
 Suggests:
   RColorBrewer
-License: What license is it under?
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
