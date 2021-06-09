@@ -11,7 +11,7 @@ In this tutorial, we will create a basic horizon plot from sample data, and then
 
 ### Loading in the package
 
-The sample data sets and dependencies are loaded automatically on package download.
+The sample data sets and dependencies are loaded automatically with the package.
 
 ```
 ## Install devtools
@@ -29,6 +29,8 @@ library(biomehorizon)
 ## Values represent sample reads per microbe within a given sample. 
 ## Though in this case values are integer sample reads, they can also be represented as proportions or 
 ## percentages of the total sample.
+library(dplyr)
+
 otusample_diet %>% 
 	arrange(desc(MCT.f.0002)) %>% 
 	select(1:7) %>% 
@@ -68,7 +70,7 @@ head(metadatasample_diet)
 ## You can supply a vector of strings each with the entire taxonomy of a microbe, 
 ## with levels separated by semicolons, or a table with columns for each taxonomic level
 ## Supports classification up to Subspecies (8 levels)
-head(taxonomydata)
+head(taxonomysample_diet)
 ```
 
 ```
@@ -205,9 +207,6 @@ otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 After refining the data with `prepanel`, we supply the parameter list to `horizonplot` to construct the horizon plot.
 
 ```
-## Basic plot using default filtering thresholds
-paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", 
-otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))  
 
 ## Basic plot using default filtering thresholds
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01")
@@ -234,7 +233,6 @@ Rather than plotting multiple microbes in one subject, we can also plot one micr
 ```
 
 ## Subset the data set to the subjects who were sampled on all 17 days, and arrange by date
-library(dplyr)
 metadata_17 <- metadatasample_diet %>%
   filter(subject %in% c("MCTs08","MCTs18","MCTs23","MCTs26","MCTs33","MCTs36")) %>%
   arrange(subject, collection_date)
@@ -434,7 +432,7 @@ In addition to the default OTU ID labels for each microbe subplot, we can also l
 
 ```
 ## Supply taxonomysample and set facetLabelsByTaxonomy to TRUE
-paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet, subj = "MCTs01", facetLabelsByTaxonomy = TRUE)
+paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet$taxonomy, subj = "MCTs01", facetLabelsByTaxonomy = TRUE)
 
 horizonplot(paramList)
 ```
@@ -494,7 +492,6 @@ Most commonly relevant aesthetics are returned by horizonaes(), but if we want t
 
 ```
 ## Label the x-axis by date
-library(RColorBrewer)
 
 paramList <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, subj = "Baboon_388", regularInterval = 25, maxGap = 75)
 
@@ -504,7 +501,7 @@ horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")
 	ggplot2::scale_x_continuous(expand = c(0,0), 
 	breaks = c(500, 600, 700, 800, 1100, 1200, 1300), 
 	labels = dateVec) +
-  ggplot2::theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 ```
 
 ![](assets/pics/plot_customaes.png)
