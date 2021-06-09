@@ -432,7 +432,7 @@ In addition to the default OTU ID labels for each microbe subplot, we can also l
 
 ```
 ## Supply taxonomysample and set facetLabelsByTaxonomy to TRUE
-paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet, subj = "MCTs01", facetLabelsByTaxonomy = TRUE)
+paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet$taxonomy, subj = "MCTs01", facetLabelsByTaxonomy = TRUE)
 
 horizonplot(paramList)
 ```
