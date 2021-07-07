@@ -102,17 +102,18 @@ A common problem faced in visualizing time series data is plotting data
 
 \examples{
 # Basic plot form. By default, samples are plotted next to each other.
-plist <- prepanel(otusample, metadatasample, taxonomysample, subj = "subject_4")
+plist <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet,
+taxonomysample = taxonomysample_diet, subj = "MCTs16")
 horizonplot(plist)
 
 # For irregularly spaced time series, you can "regularize" the data to create
 # an accurate timescale.
 
-# Adjust data to regular time intervals each 100 days. This will interpolate
-# new data points for each OTU at day = 1, 101, 201, etc. based on values
+# Adjust data to regular time intervals each 1 day. This will interpolate
+# new data points for each OTU at day = 1, 2, 3 etc. based on values
 # at previous and subsequent timepoints.
-plist <- prepanel(otusample, metadatasample, taxonomysample, subj="subject_4",
-                  regularInterval = 100)
+plist <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, 
+                  subj = "MCTs16", regularInterval = 1)
 horizonplot(plist)
 
 # If the data has large gaps of time without samples, interpolating data
@@ -122,14 +123,15 @@ horizonplot(plist)
 # data will be regularized separately on both sides of the break in two
 # different facets.
 
-# Set maximum time without samples to 200 days
-plist <- prepanel(otusample, metadatasample, taxonomysample, subj="subject_4",
-                  regularInterval = 100, maxGap = 200)
+# Set maximum time without samples to 75 days
+plist <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, 
+                  subj = "Baboon_388", regularInterval = 25, maxGap = 75)
 horizonplot(plist)
 
 # Remove facets with less than 5 samples
-plist <- prepanel(otusample, metadatasample, taxonomysample, subj="subject_4",
-                  regularInterval = 100, maxGap = 200, minSamplesPerFacet = 5)
+plist <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, 
+                  subj = "Baboon_388", regularInterval = 25, maxGap = 75, 
+                  minSamplesPerFacet = 5)
 horizonplot(plist)
 
 }

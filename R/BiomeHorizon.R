@@ -172,46 +172,47 @@
 #' @examples
 #' # Pass just the OTU table to prepanel, and it will assume all samples belong
 #' # to the same subject.
-#' prepanel(otusample)
+#' prepanel(otusample = otusample_diet)
 #'
 #' # Supplement metadata and a subject name, and it will select samples from
 #' # just one subject (this is what you should do with more than one subject).
-#' prepanel(otusample, metadatasample, subj="subject_1")
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01")
 #'
 #' # Pass taxonomydata to prepanel if you want to label facets by taxonomy
 #' # rather than by OTU ID.
-#' prepanel(otusample, metadatasample, taxonomysample, subj="subject_1",
-#' facetLabelsByTaxonomy=TRUE)
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+#' taxonomydata = taxonomysample_diet, subj="MCTs01", facetLabelsByTaxonomy=TRUE)
 #'
 #' # OTU filtering using both a prevalence and an abundance standard (default)
-#' prepanel(otusample, metadatasample, subj="subject_2", thresh_prevalence=75,
-#' thresh_abundance=0.75)
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01", 
+#' thresh_prevalence=75, thresh_abundance=0.75)
 #'
 #' # OTU filtering using just an abundance standard
-#' prepanel(otusample, metadatasample, subj="subject_2", thresh_prevalence=NA,
-#' thresh_abundance=0.75)
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01",
+#' thresh_prevalence=NA, thresh_abundance=0.75)
 #'
 #' # If an OTU's average abundance reaches a high enough threshold, override
 #' # other standards and include it in analysis
-#' prepanel(otusample, metadatasample, subj="subject_2", thresh_prevalence=90,
-#' thresh_abundance=0.75, thresh_abundance_override=1.5)
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01", 
+#' thresh_prevalence=90, thresh_abundance=0.75, thresh_abundance_override=1.5)
 #'
 #' # Filter OTUs where >2% samples are NA values
-#' prepanel(otusample, metadatasample, subj="subject_2", thresh_NA=2)
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01", 
+#' thresh_NA=2)
 #'
 #' # You can also manually select OTUs by OTU ID
-#' prepanel(otusample, metadatasample, subj="subject_2",
-#' otulist=c("otu_1000","otu_1243","otu_1530","otu_6821","otu_7737"))
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, subj="MCTs01",
+#' otulist=c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 #'
 #' # Manual selection can be used to specify the order OTUs will appear on
 #' # the horizon plot. For example, these two datasets have identical OTUs, but
 #' # they are ordered differently.
-#' params <- prepanel(otusample, metadatasample, subj="subject_1",
-#' thresh_prevalence=95, thresh_abundance=1.5)
+#' params <- prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+#' subj="MCTs01", thresh_prevalence=95, thresh_abundance=1.5, 
+#' otulist=c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 #' params[[1]]$otuid
-#' params <- prepanel(otusample, metadatasample, subj="subject_1",
-#' otulist=c("otu_2526","otu_1530", "otu_7737", "otu_6821", "otu_3773",
-#' "otu_2457", "otu_1243", "otu_2378"))
+#' params <- prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+#' subj="MCTs01", otulist=c("taxon 10", "taxon 2", "taxon 1", "taxon 14"))
 #' params[[1]]$otuid
 #'
 #' # The origin and band.thickness variables can be set to either a numeric
@@ -219,11 +220,12 @@
 #' # on its sample values.
 #'
 #' # Use a fixed origin of 5% for all OTU subpanels
-#' prepanel(otusample, metadatasample, subj="subject_1", origin=5)
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+#' subj="MCTs01", origin=5)
 #'
 #' # Evaluate a different origin for each OTU subpanel using a custom function
-#' prepanel(otusample, metadatasample, subj="subject_1",
-#' origin=function(y){mad(y, na.rm=TRUE)})
+#' prepanel(otusample = otusample_diet, metadatasample = metadatasample_diet, 
+#' subj="MCTs01", origin=function(y){mad(y, na.rm=TRUE)})
 #'
 #' @import dplyr
 #' @importFrom magrittr %>%
@@ -462,9 +464,9 @@ prepanel <- function(otudata, metadata=NA, taxonomydata=NA,
     otudata <- otudata %>% dplyr::filter(otuid == singleVarOTU)
   }
 
-  # Covert otudata format for single variable analysis
+  # Covert otudata format for single variable analysis. Remove extra metadata columns
   if(!is.na(singleVarOTU)) {
-    samplenames <- metadata %>% dplyr::select(-collection_date) %>% dplyr::group_by(subject) %>% dplyr::mutate(row_id=1:dplyr::n()) %>% dplyr::ungroup() %>% tidyr::spread(subject,sample) %>% dplyr::select(-row_id) %>% t() %>% as.data.frame() %>% tibble::rowid_to_column("otuid")
+    samplenames <- metadata %>% dplyr::select(subject, sample) %>% dplyr::group_by(subject) %>% dplyr::mutate(row_id=1:dplyr::n()) %>% dplyr::ungroup() %>% tidyr::spread(subject,sample) %>% dplyr::select(-row_id) %>% t() %>% as.data.frame() %>% tibble::rowid_to_column("otuid")
     ids <- samplenames$otuid
     samplenames <- samplenames %>% dplyr::select(-otuid)
     otudata <- matrix(otudata[1,][c(as.matrix(samplenames))],nrow(samplenames)) %>% as.data.frame() %>% dplyr::mutate(otuid=ids) %>% dplyr::select(otuid,everything())
@@ -730,17 +732,18 @@ prepanel <- function(otudata, metadata=NA, taxonomydata=NA,
 #'
 #' @examples
 #' # Basic plot form. By default, samples are plotted next to each other.
-#' plist <- prepanel(otusample, metadatasample, taxonomysample, subj = "subject_4")
+#' plist <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet,
+#' taxonomysample = taxonomysample_diet, subj = "MCTs16")
 #' horizonplot(plist)
 #'
 #' # For irregularly spaced time series, you can "regularize" the data to create
 #' # an accurate timescale.
 #'
-#' # Adjust data to regular time intervals each 100 days. This will interpolate
-#' # new data points for each OTU at day = 1, 101, 201, etc. based on values
+#' # Adjust data to regular time intervals each 1 day. This will interpolate
+#' # new data points for each OTU at day = 1, 2, 3 etc. based on values
 #' # at previous and subsequent timepoints.
-#' plist <- prepanel(otusample, metadatasample, taxonomysample, subj="subject_4",
-#'                   regularInterval = 100)
+#' plist <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, 
+#'                   subj = "MCTs16", regularInterval = 1)
 #' horizonplot(plist)
 #'
 #' # If the data has large gaps of time without samples, interpolating data
@@ -750,14 +753,15 @@ prepanel <- function(otudata, metadata=NA, taxonomydata=NA,
 #' # data will be regularized separately on both sides of the break in two
 #' # different facets.
 #'
-#' # Set maximum time without samples to 200 days
-#' plist <- prepanel(otusample, metadatasample, taxonomysample, subj="subject_4",
-#'                   regularInterval = 100, maxGap = 200)
+#' # Set maximum time without samples to 75 days
+#' plist <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, 
+#'                   subj = "Baboon_388", regularInterval = 25, maxGap = 75)
 #' horizonplot(plist)
 #'
 #' # Remove facets with less than 5 samples
-#' plist <- prepanel(otusample, metadatasample, taxonomysample, subj="subject_4",
-#'                   regularInterval = 100, maxGap = 200, minSamplesPerFacet = 5)
+#' plist <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, 
+#'                   subj = "Baboon_388", regularInterval = 25, maxGap = 75, 
+#'                   minSamplesPerFacet = 5)
 #' horizonplot(plist)
 #'
 #' @import ggplot2
@@ -998,7 +1002,7 @@ horizonplot <- function(parameterList, aesthetics=horizonaes()) {
     geom_area(aes(x = as.numeric(day), y = value, fill=band), position="identity", color=col.outline) +
     scale_fill_manual(values=col.bands,breaks=names(col.bands)[c((2*nbands):(1+nbands),nbands:1)],labels=c(paste("+",nbands:1,sep=""),(-1):(-1*nbands))) +
     theme_bw() +
-    theme(axis.text.x=element_text(size=16), axis.text.y=element_blank(), axis.ticks.y=element_blank(), panel.grid=element_blank(), panel.border=element_rect(color=col.border), strip.text.y=element_text(angle=180), panel.spacing.y=unit(0, units="cm"), legend.position=legendPosition) +
+    theme(axis.text.x=element_text(size=16), axis.text.y=element_blank(), axis.ticks.y=element_blank(), panel.grid=element_blank(), panel.border=element_rect(color=col.border), strip.text.y.left=element_text(angle=0), panel.spacing.y=unit(0, units="cm"), legend.position=legendPosition) +
     scale_y_continuous(expand = c(0,0)) + scale_x_continuous(expand = c(0,0)) + # remove margins between plot and panel
     xlab(ifelse(is.na(timestamps), "Sample", "Day")) +
     ylab(element_blank())
@@ -1048,8 +1052,9 @@ horizonplot <- function(parameterList, aesthetics=horizonaes()) {
 #' horizon plot, but if you want to add other aesthetics not included in this
 #' function, you can do so by appending them to the horizon plot object using
 #' the \code{+} operator. e.g. to add a gray background in the plotting area:\cr
-#' \code{horizonplot(prepanel(otusample, metadatasample, taxonomysample,
-#' subj="subject_1")) + theme(panel.background = element_rect(fill="gray90"))}
+#' \code{horizonplot(prepanel(otudata = otusample_diet, 
+#' metadata = metadatasample_diet, taxonomydata = taxonomysample_diet, 
+#' subj = "MCTs01")) + theme(panel.background = element_rect(fill="gray90"))}
 #'
 #' @param title character. The text for the title.
 #' @param subtitle character. The text for the subtitle, displayed below the title.
@@ -1089,7 +1094,8 @@ horizonplot <- function(parameterList, aesthetics=horizonaes()) {
 #'   to apply the aesthetics.
 #'
 #' @examples
-#' plist <- prepanel(otusample, metadatasample, taxonomysample, subj = "subject_2")
+#' plist <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, 
+#' taxonomydata = taxonomysample_diet, subj = "MCTs01")
 #'
 #' # By default, the function is called with no arguments to use default aesthetics
 #' horizonplot(plist, horizonaes())
