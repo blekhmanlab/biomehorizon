@@ -9,6 +9,25 @@ BiomeHorizon is an R package for visualizing longitudinal microbiome data in the
 In this tutorial, we will create a basic horizon plot from sample data, and then add modifications to demonstrate the versatility of the package. We provide two sample data sets; one is a human dietary supplement study (Johnson et al. 2019; https://doi.org/10.1016/j.chom.2019.05.005; data downloaded from https://github.com/knights-lab/dietstudy_analyses/tree/master/data/maps). The diet data set includes fecal shotgun metagenomes from 34 human subjects collected daily over 17 days. The second study uses opportunistically collected fecal amplicons (16S) from a wild baboon population (Grieneisen et al. accepted; data downloaded from doi:10.5281/zenodo.4662081). The baboon data set includes a subset of 276 samples from 6 baboon subjects (27 - 69 samples per subject) collected over 2-11 years per subject. Each data set contains an OTU (baboon) or microbial taxon ID (diet) table, a corresponding table of microbial taxonomy information, and a metadata table with collection dates.
 
 
+### What is a horizon plot?
+
+[how plot is created step-by-step + pic (cite paper?)]
+
+[2-panel plot with A) horizon plot B) line graph with same data]
+
+In the picture above, notice the big red streak across the middle of the graph. This represents an increased abundance of two particular microbes throughout the period of a salmonella infection for this individual.
+Now look at the same data, but visualized on a line graph. Hard to interpret, right?
+
+This is what the horizon plot does so well: summarize broad trends to tell a story about time series data.
+
+In the rest of the tutorial, we will learn how to use the package to make a horizon plot.
+
+The compactness and readability of a horizon plot is thus particularly suited for longitudinal microbiome data, which contain numerous microbes with important information per microbe as well as correlational information between microbes.
+
+For example here, we can see seasonality of the microbes.
+
+Here, we can see sustained vs temporary change
+
 ### Loading in the package
 
 The sample data sets and dependencies are loaded automatically with the package.
@@ -518,3 +537,10 @@ horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")
 ```
 
 ![](assets/pics/plot_customaes.png)
+
+
+### Reproducing plots from *[citation]*
+
+The following code can be used to reproduce all plots shown in *[citation]*.
+
+*[TODO: add code and output showing how to create figure in manuscript? Either as 5+ separate outputs or using cowplot]*
