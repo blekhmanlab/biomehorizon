@@ -283,11 +283,24 @@ Based on this graph we might then infer that subjects MCTs18, MCTs23, and MCTs26
 
 ### Adjust bands to highlight common or rare OTUs
 
-To emphasize different properties of the data, the bands on a horizon plot can be adjusted. The base of the first positive band for an OTU, where the Y-axis value=0, is the 'origin'. By default, the origin for each OTU is calculated as the median value of that OTU across all samples, and band widths represent 4 quartiles above (blue bands) and 4 quartiles below (red bands) the origin relative to the absolute extreme value for that OTU.
+To emphasize different properties of the data, the bands on a horizon plot can be adjusted. There are three metrics which define the range of values on the horizon plot: **origin**, **band thickness**, and **nbands**.
 
-This means that by default, if the median relative abundance of OTU A across all samples was **10% (min = 0%, max = 30%)**, then each band represents an abundance range of **((30-10)/4) = 5%**. Thus, a band colorscale value of **+2** for OTU A at timepoint 1 indicates that OTU A had a relative abundance between **(min = 10 + (30-10)/4, max = 10 + 2*((30-10)/4)) = 15-20%** at timepoint 1, while a band colorscale value of **-2** for OTU A at timepoint 2 indicates that OTU A had a relative abundance ranging from **0-5%** at timepoint 2. Because the distance between the maximum and the origin **(30-10% = 20%)** is greater than the distance between the minimum and the origin **(10-0% = 10%)** for OTU A, there are no timepoints with a band colorscale of **-3** or **-4**. By scaling within each OTU, the dynamics of multiple OTUs that may vary in median abundance by orders of magnitude can be visualized on the same graph.
+#### Default values
+
+The base of the first positive band for an OTU, where the Y-axis value=0, is the **origin**. The Y-scale height of each band is the **band thickness**. By default, the origin for each OTU is calculated as the median value of that OTU across all samples, and band widths represent 4 quartiles above (blue bands) and 4 quartiles below (red bands) the origin relative to the absolute extreme value for that OTU.
+
+[
+	add figure here? with horizontal line showing median at 10%, and annotations for each quartile showing 15%, 20%, etc?
+	alternatively, we add this at the top and keep this section to defaults and possible modifications.
+]
+
+In other words, if OTU A has relative abundance values ranging from **0% to 30%** with a median of **10%**, then each band represents an abundance range of **(30-10)/4 = 5%**. Thus, a band colorscale value of **+2** for OTU A at timepoint 1 indicates that OTU A had a relative abundance between **(min = 10 + 5, max = 10 + 2*5) = 15-20%** at timepoint 1, while a band colorscale value of **-2** for OTU A at timepoint 2 indicates that OTU A had a relative abundance ranging from **0-5%** at timepoint 2. Because the distance between the maximum and the origin **(30-10% = 20%)** is greater than the distance between the minimum and the origin **(10-0% = 10%)** for OTU A, there are no timepoints with a band colorscale of **-3** or **-4**.
+
+By scaling within each OTU, the dynamics of multiple OTUs that may vary in median abundance by orders of magnitude can be visualized on the same graph.
 
 However, we can add several modifications to the horizon plot to emphasize different aspects of our longitudinal data.  
+
+#### Custom values
 
 First, we change the number of positive bands into which data is segmented.
 
@@ -320,7 +333,7 @@ horizonplot(paramList)
 
 ![](assets/pics/plot_origin_fixed.png)
 
-Similarly, we can modify the band thickness, the height of each horizontal band denoted by a unique color, which determines the scale of a horizon subplot.
+Similarly, we can modify the **band thickness**, the height of each horizontal band denoted by a unique color, which determines the scale of a horizon subplot.
 
 ```
 ## Set band thickness to 1/6 the distance between the origin and maximum value
