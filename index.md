@@ -11,22 +11,51 @@ In this tutorial, we will create a basic horizon plot from sample data, and then
 
 ### What is a horizon plot?
 
-[how plot is created step-by-step + pic (cite paper?)]
+A horizon plot is an effective method of visualizing change in values over time, in a fraction of the vertical space used by a line or area graph. The figure below illustrates step-by-step how a horizon plot is constructed from an area graph.
 
-[2-panel plot with A) horizon plot B) line graph with same data]
+![](assets/pics/plot_construction.png)
 
-In the picture above, notice the big red streak across the middle of the graph. This represents an increased abundance of two particular microbes throughout the period of a salmonella infection for this individual.
-Now look at the same data, but visualized on a line graph. Hard to interpret, right?
+1) Values are plotted as a relative abundance vs. time area graph for each OTU time series
+2) Values are centered to a 'zero', in this case the median value [values are median-centered]
+3) Plotting area is divided into quartile 'bands' above and below the median, with darker blue bands[colors] indicating a higher abundance range and darker red bands indicating a lower abundance range
+4) Quartiles are overlaid
 
-This is what the horizon plot does so well: summarize broad trends to tell a story about time series data.
+	-OR-
 
-In the rest of the tutorial, we will learn how to use the package to make a horizon plot.
+Each microbe subplot is constructed by first plotting relative abundance vs. time in an area graph after centering values to a 'zero', in this case the median value (1). The plotting area is then divided into quartile 'bands' above and below the median, with darker blue bands indicating values progressively above median abundance, and darker red bands below median abundance (2). Finally, bands are overlaid to compress vertical space (3).
+
+
+This compression of vertical space is particularly valuable for compositionally complex data such as microbiome data, which contain numerous microbes that fluctuate in abundance at once, and require comparison of trends across these microbes.
+
+(...) visualizing compositionally complex data from the microbiome, which requires tracking change in numerous microbes in parallel.
+
+	-OR-
+
+This compression of vertical space suits a unique challenge of[posed by] microbiome data, of developing meaningful insights into changes in numerous microbes which naturally rest at different abundance levels.
 
 The compactness and readability of a horizon plot is thus particularly suited for longitudinal microbiome data, which contain numerous microbes with important information per microbe as well as correlational information between microbes.
 
-For example here, we can see seasonality of the microbes.
 
-Here, we can see sustained vs temporary change
+![](assets/pics/horizon_vs_line.png)
+
+The graphs above depict the same data (citation with data sources?). Compared to the line graph which becomes difficult to interpret with a large number of microbes, the horizon plot facilitates identification of patterns within a single microbe's time series as well as quick comparison of trends across several time series / While the line graph is difficult to interpret with a large number of microbes, the horizon plot clearly depicts both change in individual microbes over time and broader trends between microbes.
+
+
+	Additionally, by using separate subplots for different microbes, the horizon plot allows for discrete scales appropriate to their respective microbe's abundance ranges, whereas the line graph forces all microbes to use the same scale. [include here or just wait until discussion of band thickness?]
+
+	Note that the usage of a separate subplot for each microbe allows us to quickly identify subtle patterns in microbes at naturally lower abundance ranges, e.g. taxons 2 and 3, revealing that these microbes indeed follow the trend of initial decreased abundance. This finding is lost[dwarfed] in the comparatively large scale of the line graph.
+
+	You'll notice another asset of the horizon plot is using separate scales for each microbe, allowing visualization of changes at a resolution appropriate for each microbe's unique abundance range.
+
+	Put side-by-side, you'll notice another advantage of the horizon plot over traditional graphs in its division of the plotting area into a separate scale for each microbe, allowing the scale to more appropriately match the microbe in each subplot.
+	[allowing adjustment of the scale to each microbe's unique range of abundance values.]
+
+
+[give example of insight you can make into microbiome data with the horizon plot - e.g seasonality/comovement. In this case, would it be better to just use the David et al 2014 paper here since it clearly demonstrates a pattern with salmonella infection?]
+
+For example, from the horizon plot we can quickly identify a group of microbes which decreased abundance around sample 2 [draw box around this portion of graph]. This pattern is even revealed for microbes at very low abundance levels such as [taxon A] and [taxon B], with proportional abundances of [A] and [B] at sample 1, respectively. In the line graph, on the other hand, this trend is difficult to identify, and subtler shifts in microbe abundance are lost.
+
+Thus horizon plots effectively summarize broad trends which reveal insights into time series data. In the rest of the tutorial, we will learn how to use the package to make a horizon plot.
 
 ### Loading in the package
 
@@ -44,10 +73,10 @@ library(biomehorizon)
 ### Preview of Diet Sample Data
 
 ```
-## OTU table format. The first column contains microbial taxon IDs (or OTUs for 16S data), and all other columns are samples.
-## Values represent sample reads per microbe within a given sample.
-## Though in this case values are integer sample reads, they can also be represented as proportions or
-## percentages of the total sample.
+## OTU table format. The first column contains microbial taxon IDs (or OTUs for 16S data), and
+## all other columns are samples. Values represent sample reads per microbe within a given sample.
+## Though in this case values are integer sample reads, they can also be represented as
+## proportions or percentages of the total sample.
 library(dplyr)
 
 otusample_diet %>%
@@ -84,7 +113,8 @@ head(metadatasample_diet)
 ```
 
 ```
-## Taxonomydata format. Describes taxonomy of each microbe (or OTU, for 16S data) from Kingdom through Genus.
+## Taxonomydata format. Describes taxonomy of each microbe (or OTU, for 16S data) from Kingdom
+## through Genus.
 ## Levels without classification have NA values.
 ## You can supply a vector of strings each with the entire taxonomy of a microbe,
 ## with levels separated by semicolons, or a table with columns for each taxonomic level
