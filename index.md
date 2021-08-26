@@ -4,6 +4,19 @@ title: R/BiomeHorizon User Guide
 tagline: Plot Microbiome Time Series
 ---
 
+- [What is a horizon plot?](#what-is-a-horizon-plot-)
+- [Loading in the package](#loading-in-the-package)
+- [Preview of Diet Sample Data](#preview-of-diet-sample-data)
+- [Data Refining and OTU Selection](#data-refining-and-otu-selection)
+- [Constructing the Horizon Plot](#constructing-the-horizon-plot)
+- [Plot a Single Microbe Across Multiple Subjects](#plot-a-single-microbe-across-multiple-subjects)
+- [Adjust bands to highlight common or rare OTUs](#adjust-bands-to-highlight-common-or-rare-otus)
+  * [Default values](#default-values)
+  * [Custom values](#custom-values)
+- [Dealing with Missing and/or Irregularly Spaced Data](#dealing-with-missing-and-or-irregularly-spaced-data)
+- [Customizing Plot Aesthetics](#customizing-plot-aesthetics)
+- [Reproducing Plots from the Manuscript](#reproducing-plots-from-the-manuscript)
+
 BiomeHorizon is an R package for visualizing longitudinal microbiome data in the form of a horizon plot. A horizon plot provides a compact way to visualize multiple time series in parallel by overlying the values at different ranges of magnitude. Though this package is designed for microbiome data, it can be used to visualize other types of longitudinal data as well.  
 
 In this tutorial, we will create a basic horizon plot from sample data, and then add modifications to demonstrate the versatility of the package. We provide two sample data sets; one is a human dietary supplement study (Johnson et al. 2019; https://doi.org/10.1016/j.chom.2019.05.005; data downloaded from https://github.com/knights-lab/dietstudy_analyses/tree/master/data/maps). The diet data set includes fecal shotgun metagenomes from 34 human subjects collected daily over 17 days. The second study uses opportunistically collected fecal amplicons (16S) from a wild baboon population (Grieneisen et al. accepted; data downloaded from doi:10.5281/zenodo.4662081). The baboon data set includes a subset of 276 samples from 6 baboon subjects (27 - 69 samples per subject) collected over 2-11 years per subject. Each data set contains an OTU (baboon) or microbial taxon ID (diet) table, a corresponding table of microbial taxonomy information, and a metadata table with collection dates.
