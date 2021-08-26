@@ -2,6 +2,14 @@
 layout: page
 title: R/BiomeHorizon User Guide
 tagline: Plot Microbiome Time Series
+output:
+  html_document:
+  toc: true
+  toc_float: true
+  toc_collapsed: true
+toc_depth: 3
+number_sections: true
+theme: lumen
 ---
 
 - [What is a horizon plot?](#what-is-a-horizon-plot-)
@@ -11,8 +19,6 @@ tagline: Plot Microbiome Time Series
 - [Constructing the Horizon Plot](#constructing-the-horizon-plot)
 - [Plot a Single Microbe Across Multiple Subjects](#plot-a-single-microbe-across-multiple-subjects)
 - [Adjust bands to highlight common or rare OTUs](#adjust-bands-to-highlight-common-or-rare-otus)
-  * [Default values](#default-values)
-  * [Custom values](#custom-values)
 - [Dealing with Missing and/or Irregularly Spaced Data](#dealing-with-missing-and-or-irregularly-spaced-data)
 - [Customizing Plot Aesthetics](#customizing-plot-aesthetics)
 - [Reproducing Plots from the Manuscript](#reproducing-plots-from-the-manuscript)
