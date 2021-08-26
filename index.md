@@ -16,46 +16,19 @@ A horizon plot is an effective method of visualizing change in values over time,
 ![](assets/pics/plot_construction.png)
 
 1) Values are plotted as a relative abundance vs. time area graph for each OTU time series
-2) Values are centered to a 'zero', in this case the median value [values are median-centered]
-3) Plotting area is divided into quartile 'bands' above and below the median, with darker blue bands[colors] indicating a higher abundance range and darker red bands indicating a lower abundance range
-4) Quartiles are overlaid
+2) Values are centered to a 'zero', in this case the median relative abundance
+3) Plotting area is divided into quartile 'bands' above and below the median, with darker blue bands indicating values incrementally above median abundance and darker red bands below median abundance; negative bands are mirrored upwards
+4) Bands are overlaid to compress vertical space
 
-	-OR-
+**(Things to possibly remove for redundancy in italics)**
 
-Each microbe subplot is constructed by first plotting relative abundance vs. time in an area graph after centering values to a 'zero', in this case the median value (1). The plotting area is then divided into quartile 'bands' above and below the median, with darker blue bands indicating values progressively above median abundance, and darker red bands below median abundance (2). Finally, bands are overlaid to compress vertical space (3).
-
-
-This compression of vertical space is particularly valuable for compositionally complex data such as microbiome data, which contain numerous microbes that fluctuate in abundance at once, and require comparison of trends across these microbes.
-
-(...) visualizing compositionally complex data from the microbiome, which requires tracking change in numerous microbes in parallel.
-
-	-OR-
-
-This compression of vertical space suits a unique challenge of[posed by] microbiome data, of developing meaningful insights into changes in numerous microbes which naturally rest at different abundance levels.
-
-The compactness and readability of a horizon plot is thus particularly suited for longitudinal microbiome data, which contain numerous microbes with important information per microbe as well as correlational information between microbes.
-
+[*This increased data density enables easier comparison between time series, as we will see below.*]
 
 ![](assets/pics/horizon_vs_line.png)
 
-The graphs above depict the same data (citation with data sources?). Compared to the line graph which becomes difficult to interpret with a large number of microbes, the horizon plot facilitates identification of patterns within a single microbe's time series as well as quick comparison of trends across several time series / While the line graph is difficult to interpret with a large number of microbes, the horizon plot clearly depicts both change in individual microbes over time and broader trends between microbes.
+The graphs above depict the same diet sample data provided earlier. [*By compressing vertical space, the horizon plot enables easy comparison between time series while retaining clear visualization of individual time series.*] Note that the usage of a unique scale for each subplot captures the proportional decrease in abundance of *taxon 36* and *taxon 38* around timepoint 2 which follows the trend of other microbes, but is dwarfed by more highly abundant microbes in the line graph.
 
-
-	Additionally, by using separate subplots for different microbes, the horizon plot allows for discrete scales appropriate to their respective microbe's abundance ranges, whereas the line graph forces all microbes to use the same scale. [include here or just wait until discussion of band thickness?]
-
-	Note that the usage of a separate subplot for each microbe allows us to quickly identify subtle patterns in microbes at naturally lower abundance ranges, e.g. taxons 2 and 3, revealing that these microbes indeed follow the trend of initial decreased abundance. This finding is lost[dwarfed] in the comparatively large scale of the line graph.
-
-	You'll notice another asset of the horizon plot is using separate scales for each microbe, allowing visualization of changes at a resolution appropriate for each microbe's unique abundance range.
-
-	Put side-by-side, you'll notice another advantage of the horizon plot over traditional graphs in its division of the plotting area into a separate scale for each microbe, allowing the scale to more appropriately match the microbe in each subplot.
-	[allowing adjustment of the scale to each microbe's unique range of abundance values.]
-
-
-[give example of insight you can make into microbiome data with the horizon plot - e.g seasonality/comovement. In this case, would it be better to just use the David et al 2014 paper here since it clearly demonstrates a pattern with salmonella infection?]
-
-For example, from the horizon plot we can quickly identify a group of microbes which decreased abundance around sample 2 [draw box around this portion of graph]. This pattern is even revealed for microbes at very low abundance levels such as [taxon A] and [taxon B], with proportional abundances of [A] and [B] at sample 1, respectively. In the line graph, on the other hand, this trend is difficult to identify, and subtler shifts in microbe abundance are lost.
-
-Thus horizon plots effectively summarize broad trends which reveal insights into time series data. In the rest of the tutorial, we will learn how to use the package to make a horizon plot.
+In the rest of the tutorial, we will learn how to use the package to make a horizon plot.
 
 ### Loading in the package
 
