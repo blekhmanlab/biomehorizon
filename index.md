@@ -206,13 +206,18 @@ We can view the sample reads that were aggregated to produce these prevalence an
 library(dplyr)
 ## Retrieve samples from MCTs01
 otusample_subj1 <- otusample_diet %>%
-	select(otuid, as.character((metadatasample_diet %>% filter(subject=="MCTs01"))$sample))
+	select(taxon_id, as.character((metadatasample_diet %>% filter(subject=="MCTs01"))$sample))
 
 ## Samples reads for taxon 2
 otusample_subj1 %>%
-	filter(otuid == "otu_4252") %>%
-	select(-otuid) %>%
+	filter(taxon_id == "taxon 2") %>%
+	select(-taxon_id) %>%
 	as.numeric()
+```
+
+```
+[1] 63019  4537 31306 16093 14077 24294 31317 35236 18594 52592 16422 39671 13605
+[14] 32534  3230
 ```
 
 These 35 OTUs were selected using the default filtering thresholds, but maybe we want stricter standards.
