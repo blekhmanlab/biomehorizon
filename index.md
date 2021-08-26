@@ -146,6 +146,8 @@ paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, 
 ```
 
 ```
+[1] 15
+
 Constructed an OTU table and other variables with the following settings:
 thresh_prevalence: 80
 thresh_abundance: 0.5
@@ -216,8 +218,7 @@ otusample_subj1 %>%
 ```
 
 ```
-[1] 63019  4537 31306 16093 14077 24294 31317 35236 18594 52592 16422 39671 13605
-[14] 32534  3230
+[1] 63019  4537 31306 16093 14077 24294 31317 35236 18594 52592 16422 39671 13605 32534  3230
 ```
 
 These 35 OTUs were selected using the default filtering thresholds, but maybe we want stricter standards.
