@@ -15,18 +15,16 @@ A horizon plot is an effective method of visualizing change in values over time,
 
 ![](assets/pics/plot_construction.png)
 
-1) Values are plotted as a relative abundance vs. time area graph for each OTU time series
-2) Values are centered to a 'zero', in this case the median relative abundance
-3) Plotting area is divided into quartile 'bands' above and below the median, with darker blue bands indicating values incrementally above median abundance and darker red bands below median abundance; negative bands are mirrored upwards
-4) Bands are overlaid to compress vertical space
+1) Values are plotted as a relative abundance vs. time area graph for each OTU time series.
+2) Values are centered to a 'zero', in this case the median relative abundance. This centered value is referred to as the 'horizon' or 'origin'.
+3) The plotting area is divided into quartile 'bands' above and below the origin, with darker blue bands indicating values incrementally above the origin and darker red bands below the origin; negative bands are mirrored upward.
+4) Bands are overlaid to compress vertical space.
 
-**(Things to possibly remove for redundancy in italics)**
-
-[*This increased data density enables easier comparison between time series, as we will see below.*]
+This increased data density enables easier comparison between time series, as we will see below.
 
 ![](assets/pics/horizon_vs_line.png)
 
-The graphs above depict the same diet sample data provided earlier. [*By compressing vertical space, the horizon plot enables easy comparison between time series while retaining clear visualization of individual time series.*] Note that the usage of a unique scale for each subplot captures the proportional decrease in abundance of *taxon 36* and *taxon 38* around timepoint 2 which follows the trend of other microbes, but is dwarfed by more highly abundant microbes in the line graph.
+The graphs above depict the same diet sample data provided earlier. Note that the usage of a unique scale for each subplot captures the proportional decrease in abundance of *taxon 36* and *taxon 38* around timepoint 2 which follows the trend of other microbes, but is dwarfed by more highly abundant microbes in the line graph.
 
 In the rest of the tutorial, we will learn how to use the package to make a horizon plot.
 
@@ -291,11 +289,6 @@ To emphasize different properties of the data, the bands on a horizon plot can b
 #### Default values
 
 The base of the first positive band for an OTU, where the Y-axis value=0, is the **origin**. The Y-scale height of each band is the **band thickness**. By default, the origin for each OTU is calculated as the median value of that OTU across all samples, and band widths represent 4 quartiles above (blue bands) and 4 quartiles below (red bands) the origin relative to the absolute extreme value for that OTU.
-
-[
-	add figure here? with horizontal line showing median at 10%, and annotations for each quartile showing 15%, 20%, etc?
-	alternatively, we add this at the top and keep this section to defaults and possible modifications.
-]
 
 In other words, if OTU A has relative abundance values ranging from **0% to 30%** with a median of **10%**, then each band represents an abundance range of **(30-10)/4 = 5%**. Thus, a band colorscale value of **+2** for OTU A at timepoint 1 indicates that OTU A had a relative abundance between **(min = 10 + 5, max = 10 + 2*5) = 15-20%** at timepoint 1, while a band colorscale value of **-2** for OTU A at timepoint 2 indicates that OTU A had a relative abundance ranging from **0-5%** at timepoint 2. Because the distance between the maximum and the origin **(30-10% = 20%)** is greater than the distance between the minimum and the origin **(10-0% = 10%)** for OTU A, there are no timepoints with a band colorscale of **-3** or **-4**.
 
