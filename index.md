@@ -215,10 +215,6 @@ otusample_subj1 %>%
 	as.numeric()
 ```
 
-```
-[TODO: enter results of the above command here. Also change the above text in the case that we use a subject w/o 100% for prevalence scores]
-```
-
 These 35 OTUs were selected using the default filtering thresholds, but maybe we want stricter standards.
 
 ```
