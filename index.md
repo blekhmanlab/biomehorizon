@@ -2,17 +2,9 @@
 layout: page
 title: R/BiomeHorizon User Guide
 tagline: Plot Microbiome Time Series
-output:
-  html_document:
-  toc: true
-  toc_float: true
-  toc_collapsed: true
-toc_depth: 3
-number_sections: true
-theme: lumen
 ---
 
-- [What is a horizon plot?](#what-is-a-horizon-plot-)
+- [What is a horizon plot?](#what-is-a-horizon-plot)
 - [Loading in the package](#loading-in-the-package)
 - [Preview of Diet Sample Data](#preview-of-diet-sample-data)
 - [Data Refining and OTU Selection](#data-refining-and-otu-selection)
@@ -34,10 +26,10 @@ A horizon plot is an effective method of visualizing change in values over time,
 
 ![](assets/pics/plot_construction.png)
 
-1) Values are plotted as a relative abundance vs. time area graph for each OTU time series.
-2) Values are centered to a 'zero', in this case the median relative abundance. This centered value is referred to as the 'horizon' or 'origin'.
-3) The plotting area is divided into quartile 'bands' above and below the origin, with darker blue bands indicating values incrementally above the origin and darker red bands below the origin; negative bands are mirrored upward.
-4) Bands are overlaid to compress vertical space.
+1. Values are plotted as a relative abundance vs. time area graph for each OTU time series.
+2. Values are centered to a 'zero', in this case the median relative abundance. This centered value is referred to as the 'horizon' or 'origin'.
+3. The plotting area is divided into quartile 'bands' above and below the origin, with darker blue bands indicating values incrementally above the origin and darker red bands below the origin; negative bands are mirrored upward.
+4. Bands are overlaid to compress vertical space.
 
 This increased data density enables easier comparison between time series, as we will see below.
 
