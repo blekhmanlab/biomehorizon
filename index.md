@@ -548,8 +548,68 @@ horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")
 ![](assets/pics/plot_customaes.png)
 
 
-### Reproducing plots from *[citation]*
+### Reproducing Plots from the Manuscript
 
-The following code can be used to reproduce all plots shown in *[citation]*.
+The following code can be used to reproduce all plots shown in the manuscript.
 
-*[TODO: add code and output showing how to create figure in manuscript? Either as 5+ separate outputs or using cowplot]*
+```
+library(biomehorizon)
+library(dplyr)
+library(cowplot)
+
+#### horizonplot component of Fig 1A ####
+
+## Subset the data set to the subjects who were sampled on all 17 days, and arrange by date
+metadata_17 <- metadatasample_diet %>%
+  filter(subject %in% c("MCTs08","MCTs18","MCTs23","MCTs26","MCTs33","MCTs36")) %>%
+  arrange(subject, collection_date)
+
+otu_17 <- otusample_diet %>%
+  select(taxon_id, as.character((metadatasample_diet %>% filter(subject %in% c("MCTs08","MCTs18","MCTs23","MCTs26","MCTs33","MCTs36")))$sample))
+
+## Single variable analysis with "Taxon 1"
+paramList <- prepanel(otudata = otu_17, metadata = metadata_17, singleVarOTU = "taxon 1")
+
+png("plot_by_subject.png", width = 200, height = 125, units = 'mm', res = 300)
+
+horizonplot(paramList)
+
+dev.off()
+
+#### Fig 1B ####
+
+paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet$taxonomy, subj = "MCTs01", facetLabelsByTaxonomy = TRUE, thresh_abundance = 0.75)
+
+png("plot_taxonomy_labels.png", width = 200, height = 150, units = 'mm', res = 300)
+
+horizonplot(paramList)
+
+dev.off()
+
+#### Fig 1C ####
+
+paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet$taxonomy, subj = "MCTs01", facetLabelsByTaxonomy = TRUE, origin = 1, band.thickness = 10, thresh_abundance = 0.75)
+
+png("plot_origin1_bandthick10.png", width = 200, height = 150, units = 'mm', res = 300)
+
+horizonplot(paramList)
+
+dev.off()
+
+#### Fig 1D ####
+
+library(RColorBrewer)
+paramList <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, subj = "Baboon_388", regularInterval = 25, maxGap = 75)
+
+dateVec = as.Date(c(500, 600, 700, 800, 1100, 1200, 1300), origin =min(subset(metadatasample_baboon, subject == "Baboon_388")$collection_date)-1)
+
+png("plot_customaes.png", width = 400, height = 150, units = 'mm', res = 300)
+
+horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG"), title = "Microbiome Horizon Plot for Subject Baboon_388", xlabel = "Collection date", ylabel = "Taxa found in >80% of samples", legendTitle = "Quartiles Relative to Taxon Median", legendPosition	= "bottom")) +
+  ggplot2::scale_x_continuous(expand = c(0,0),
+                              breaks = c(500, 600, 700, 800, 1100, 1200, 1300),
+                              labels = dateVec) +
+  ggplot2::theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+dev.off()
+```
