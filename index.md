@@ -267,7 +267,7 @@ horizonplot(paramList)
 
 ## Select microbes manually
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01",
-otulist = c("taxon 1", "taxon 10", "taxon 2", "taxon 14"))
+otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 
 horizonplot(paramList)
 ```
