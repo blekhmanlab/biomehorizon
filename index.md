@@ -11,7 +11,7 @@ tagline: Plot Microbiome Time Series
 - [Constructing the Horizon Plot](#constructing-the-horizon-plot)
 - [Plot a Single Microbe Across Multiple Subjects](#plot-a-single-microbe-across-multiple-subjects)
 - [Adjust bands to highlight common or rare OTUs](#adjust-bands-to-highlight-common-or-rare-otus)
-- [Dealing with Missing and/or Irregularly Spaced Data](#dealing-with-missing-and-or-irregularly-spaced-data)
+- [Dealing with Missing and/or Irregularly Spaced Data](#dealing-with-missing-andor-irregularly-spaced-data)
 - [Customizing Plot Aesthetics](#customizing-plot-aesthetics)
 - [Reproducing Plots from the Manuscript](#reproducing-plots-from-the-manuscript)
 
