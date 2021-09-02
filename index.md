@@ -11,13 +11,13 @@ tagline: Plot Microbiome Time Series
 - [Constructing the Horizon Plot](#constructing-the-horizon-plot)
 - [Plot a Single Microbe Across Multiple Subjects](#plot-a-single-microbe-across-multiple-subjects)
 - [Adjust bands to highlight common or rare OTUs](#adjust-bands-to-highlight-common-or-rare-otus)
-- [Dealing with Missing and/or Irregularly Spaced Data](#dealing-with-missing-and-or-irregularly-spaced-data)
+- [Dealing with Missing and/or Irregularly Spaced Data](#dealing-with-missing-andor-irregularly-spaced-data)
 - [Customizing Plot Aesthetics](#customizing-plot-aesthetics)
 - [Reproducing Plots from the Manuscript](#reproducing-plots-from-the-manuscript)
 
 BiomeHorizon is an R package for visualizing longitudinal microbiome data in the form of a horizon plot. A horizon plot provides a compact way to visualize multiple time series in parallel by overlying the values at different ranges of magnitude. Though this package is designed for microbiome data, it can be used to visualize other types of longitudinal data as well.  
 
-In this tutorial, we will create a basic horizon plot from sample data, and then add modifications to demonstrate the versatility of the package. We provide two sample data sets; one is a human dietary supplement study (Johnson et al. 2019; https://doi.org/10.1016/j.chom.2019.05.005; data downloaded from https://github.com/knights-lab/dietstudy_analyses/tree/master/data/maps). The diet data set includes fecal shotgun metagenomes from 34 human subjects collected daily over 17 days. The second study uses opportunistically collected fecal amplicons (16S) from a wild baboon population (Grieneisen et al. accepted; data downloaded from doi:10.5281/zenodo.4662081). The baboon data set includes a subset of 276 samples from 6 baboon subjects (27 - 69 samples per subject) collected over 2-11 years per subject. Each data set contains an OTU (baboon) or microbial taxon ID (diet) table, a corresponding table of microbial taxonomy information, and a metadata table with collection dates.
+In this tutorial, we will create a basic horizon plot from sample data, and then add modifications to demonstrate the versatility of the package. We provide two sample data sets; one is a human dietary supplement study ([Johnson et al. 2019](https://doi.org/10.1016/j.chom.2019.05.005); data downloaded from [](https://github.com/knights-lab/dietstudy_analyses/tree/master/data/maps)). The diet data set includes fecal shotgun metagenomes from 34 human subjects collected daily over 17 days. The second study uses opportunistically collected fecal amplicons (16S) from a wild baboon population (Grieneisen et al. accepted; data downloaded from [](doi:10.5281/zenodo.4662081)). The baboon data set includes a subset of 276 samples from 6 baboon subjects (27 - 69 samples per subject) collected over 2-11 years per subject. Each data set contains an OTU (baboon) or microbial taxon ID (diet) table, a corresponding table of microbial taxonomy information, and a metadata table with collection dates.
 
 
 ### What is a horizon plot?
@@ -43,7 +43,7 @@ In the rest of the tutorial, we will learn how to use the package to make a hori
 
 The sample data sets and dependencies are loaded automatically with the package.
 
-```
+```r
 ## Install devtools
 install.packages("devtools")
 
@@ -54,7 +54,7 @@ library(biomehorizon)
 
 ### Preview of Diet Sample Data
 
-```
+```r
 ## OTU table format. The first column contains microbial taxon IDs (or OTUs for 16S data), and
 ## all other columns are samples. Values represent sample reads per microbe within a given sample.
 ## Though in this case values are integer sample reads, they can also be represented as
@@ -67,7 +67,7 @@ otusample_diet %>%
 	head()
 ```
 
-```
+```r
   taxon_id  MCT.f.0002  MCT.f.0003  MCT.f.0004  MCT.f.0005  MCT.f.0006  MCT.f.0007
 1	taxon 1	  220949	    25921	      112186	    48113	      52260	      78360
 2	taxon 2	  63019	      4537	      31306	      16093	      14077	      24294
@@ -78,13 +78,13 @@ otusample_diet %>%
 
 ```
 
-```
+```r
 ## Metadata format. Must include sample IDs that match the column names of otusample,
 ## subject IDs, and collection dates in either date or numeric format.
 head(metadatasample_diet)
 ```
 
-```
+```r
    subject      sample collection_date supplement
 1	 MCTs01	 MCT.f.0002	              2	      EVOO
 2	 MCTs01	 MCT.f.0003	              3	      EVOO
@@ -94,7 +94,7 @@ head(metadatasample_diet)
 6	 MCTs01	 MCT.f.0007	              7	      EVOO
 ```
 
-```
+```r
 ## Taxonomydata format. Describes taxonomy of each microbe (or OTU, for 16S data) from Kingdom
 ## through Genus.
 ## Levels without classification have NA values.
@@ -104,7 +104,7 @@ head(metadatasample_diet)
 head(taxonomysample_diet)
 ```
 
-```
+```r
   taxon_id                                                                                                                     taxonomy
 1  taxon 1                                                  Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Bacteroidaceae;Bacteroides
 2  taxon 2                            Bacteria;Bacteroidetes;Bacteroidia;Bacteroidales;Bacteroidaceae;Bacteroides;Bacteroides uniformis
@@ -131,13 +131,13 @@ You can use this function with just an OTU table, but this will assume that all 
 
 Let's select the subject "MCTs01". How many samples are from MCTs01?
 
-```
+```r
 length(metadatasample_diet$subject[metadatasample_diet$subject == "MCTs01"])
 
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01")
 ```
 
-```
+```r
 [1] 15
 
 Constructed an OTU table and other variables with the following settings:
@@ -196,7 +196,7 @@ As an example, *taxon 2* appears in 15/15 samples, giving it a "prevalence score
 
 We can view the sample reads that were aggregated to produce these prevalence and abundance scores for *taxon 2* below. Note that since there are no zero values, prevalence is 100%, and thus abundance is equal to the mean of all values.
 
-```
+```r
 library(dplyr)
 ## Retrieve samples from MCTs01
 otusample_subj1 <- otusample_diet %>%
@@ -209,18 +209,18 @@ otusample_subj1 %>%
 	as.numeric()
 ```
 
-```
+```r
 [1] 63019  4537 31306 16093 14077 24294 31317 35236 18594 52592 16422 39671 13605 32534  3230
 ```
 
 These 35 OTUs were selected using the default filtering thresholds, but maybe we want stricter standards.
 
-```
+```r
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01",
 thresh_prevalence = 90, thresh_abundance = 1.5)
 ```
 
-```
+```r
 Constructed an OTU table and other variables with the following settings:
 thresh_prevalence: 90
 thresh_abundance: 1.5
@@ -248,7 +248,7 @@ subj: MCTs01
 
 Alternatively, we can manually select OTUs.
 
-```
+```r
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01",
 otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 ```  
@@ -258,7 +258,7 @@ otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 
 After refining the data with `prepanel`, we supply the parameter list to `horizonplot` to construct the horizon plot.
 
-```
+```r
 
 ## Basic plot using default filtering thresholds
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01")
@@ -267,7 +267,7 @@ horizonplot(paramList)
 
 ## Select microbes manually
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01",
-otulist = c("taxon 1", "taxon 10", "taxon 2", "taxon 14"))
+otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 
 horizonplot(paramList)
 ```
@@ -282,7 +282,7 @@ Note that in the plot with manual selection, microbes are arranged according to 
 
 Rather than plotting multiple microbes in one subject, we can also plot one microbe to compare the same timepoint across multiple subjects. To use this setting, however, subjects must have the same number of samples collected on the same days. We will subset the diet data set to 6 subjects who were sampled all 17 days of the study.
 
-```
+```r
 ## Single variable analysis with "Taxon 1"
 paramList <- prepanel(otudata = otu_17, metadata = metadata_17, singleVarOTU = "taxon 1", subj = 		
 	c("MCTs08","MCTs18","MCTs23","MCTs26","MCTs36","MCTs33"))
@@ -313,7 +313,7 @@ However, we can add several modifications to the horizon plot to emphasize diffe
 
 First, we change the number of positive bands into which data is segmented.
 
-```
+```r
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", nbands = 3)
 
 horizonplot(paramList)
@@ -325,7 +325,7 @@ Including more horizon bands will more precisely distinguish values and emphasiz
 
 We can also change the origin, the value at which all sample values will be centered. We can supply this either as a constant, to set a fixed origin value for all OTUs, or as a function that operates on sample values, to evaluate a unique origin for each panel.
 
-```
+```r
 ## Origin as the mean absolute deviation of sample values
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", origin = function(y) { mad(y, na.rm = TRUE) })
 
@@ -334,7 +334,7 @@ horizonplot(paramList)
 
 ![](assets/pics/plot_origin.png)
 
-```
+```r
 ## Set a fixed origin of 1% for all OTU subpanels
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", origin = 1)
 horizonplot(paramList)
@@ -344,7 +344,7 @@ horizonplot(paramList)
 
 Similarly, we can modify the **band thickness**, the height of each horizontal band denoted by a unique color, which determines the scale of a horizon subplot.
 
-```
+```r
 ## Set band thickness to 1/6 the distance between the origin and maximum value
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", band.thickness = function(y) {max((abs(y - origin(y))), na.rm=TRUE) / 6})
 
@@ -355,7 +355,7 @@ horizonplot(paramList)
 
 Here, because the top of the highest band is only 4/6 of the maximum value, this becomes the new maximum and all higher values are rounded down. The same is true for negative bands. This can be valuable for de-emphasizing outliers at the extrema of the data.
 
-```
+```r
 ## Fixed band thickness of 10%
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", band.thickness = 10)
 
@@ -364,7 +364,7 @@ horizonplot(paramList)
 
 ![](assets/pics/plot_bt_fixed_val10.png)
 
-```
+```r
 ## Fixed band thickness of 2%
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", band.thickness = 2)
 
@@ -373,7 +373,7 @@ horizonplot(paramList)
 
 ![](assets/pics/plot_bt_fixed_val2.png)
 
-```
+```r
 ## Fixed band thickness of 0.2%
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", band.thickness = 0.2)
 
@@ -384,7 +384,7 @@ horizonplot(paramList)
 
 Notice that at smaller values of `band.thickness`, an increasing number of values are above the new maximum or below the new minimum, resulting in more extreme bands (at +4 or -4). This accentuates changes in microbes with low abundances but compresses change in microbes with larger abundances, making small increases ambiguous from large increases.
 
-```
+```r
 ## Fixed origin AND fixed band thickness
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01", origin = 1, band.thickness = 1)
 horizonplot(paramList)
@@ -399,24 +399,24 @@ Setting a fixed origin *and* band thickness lets us compare values between facet
 
 Missing data points are common in microbiome data sets. To deal with the occasional missing data point, the package offers tools to transform the data into a regularly spaced time series. To do this, we specify an interval of time at which to interpolate new data. Because the diet study was conducted daily over 17 days, we specify an interval of 1 day. As an example, we use subject MCTs16, who was sampled on 14 / 17 days.
 
-```
+```r
 ## Adjust data to a regular time interval of 1 day
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs16", regularInterval = 1)
 ```
 
 We can see the sample collection days starting from day 1 by viewing the `timestamps` variable from the output list of prepanel. This is the third element of the list (you can view components of the list in the horizonplot function documentation).
 
-```
+```r
 paramList[[3]]
 ```
 
-```
+```r
   [1]  1  3  4  5  6  8  9 10 11 12 14 15 16 17
 ```
 
 Each new value will be linear interpolated from the previous and subsequent timepoints. We can then plot the interpolated points with the observed data points.
 
-```
+```r
 horizonplot(paramList)
 ```
 
@@ -426,7 +426,7 @@ Note that because data have been interpolated to regular intervals, the x-axis l
 
 Interpolation may not be appropriate for data sets with large gaps between collection days. For irregularly spaced microbiome data, such as those collected as part of observational sampling in wild animal microbiome studies or collected during certain times of the year over multiple years (e.g. summer field seasons), regularizing can introduce inaccuracy by interpolating across large timespans. Further, plotting data without accounting for temporal differences in sampling can potentially create misleading plots. For example, subject Baboon_388 had 59 samples collected over 3 1/2 years (1316 days).
 
-```
+```r
 ## Plot samples from subject Baboon_388
 paramList <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, subj = "Baboon_388")
 
@@ -437,7 +437,7 @@ horizonplot(paramList)
 
 Because *otusample_baboon* is irregularly spaced, i.e. the distance of time between samples is not consistent throughout the time series, the timescale on the plot is misleading, even if we regularize the data by interpolating between points. We can reduce this inaccuracy by specifying the maximum amount of time without samples allowed (i.e. a gap) to create an interpolated timepoint. For example, if we interpolate a point every 50 days, but set the maximum gap between samples at 100 days, two samples that are >100 days apart will not have an interpolated timepoint. Instead, it will produce a break in the time axis, and data will be regularized separately on both sides of the break. This break is simulated by splitting the plot into two facets.
 
-```
+```r
 ## Set maxGap to 75
 paramList <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, subj = "Baboon_388", regularInterval = 25, maxGap = 75)
 
@@ -449,18 +449,18 @@ horizonplot(paramList) +
 
 We can see the sample collection days starting from day 1.
 
-```
+```r
 paramList[[3]]
 ```
 
-```
+```r
  [1]    1  157  162  172  183  313  415  424  427  430  432  436  443  455  477  479  485
 [18]  492  508  511  514  519  569  635  655  691  697  760  773  821  847  877  988 1047
 [35] 1068 1071 1071 1074 1076 1087 1093 1096 1096 1099 1102 1107 1118 1121 1121 1136 1150
 [52] 1157 1178 1202 1214 1219 1235 1274 1316
 ```
 
-```
+```r
 horizonplot(paramList)
 ```
 
@@ -468,7 +468,7 @@ horizonplot(paramList)
 
 If many breaks in the time axis are created, this could result in facets with very few samples. For example, if maxGap = 150 and the first two samples are at days 1 and 157, the first facet would contain only one sample (day 1). You can set the minimum number of samples required to include a facet. When a breaks result in facets with fewer than the specified minimum, those facets are not shown. The default = 2 samples, so this graph does not start at day 1.
 
-```
+```r
 ## Remove facets with <5 samples
 paramList <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, subj = "Baboon_388", regularInterval = 25, maxGap = 75, minSamplesPerFacet = 5)
 
@@ -484,7 +484,7 @@ horizonplot(paramList) +
 
 In addition to the default OTU ID labels for each microbe subplot, we can also label facets by their taxonomy. This method will display the most narrow level of classification available for each microbe as a facet label. To do this, we need to supply a third data set with taxonomy information, *taxonomysample*.
 
-```
+```r
 ## Supply taxonomysample and set facetLabelsByTaxonomy to TRUE
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet$taxonomy, subj = "MCTs01", facetLabelsByTaxonomy = TRUE)
 
@@ -495,7 +495,7 @@ horizonplot(paramList)
 
 Alternatively, we can supply custom facet labels. These will be applied to facet subplots from top to bottom, in the order they are specified to the vector.
 
-```
+```r
 ## Apply custom alphabetical facet labels
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet, subj = "MCTs01", otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"), customFacetLabels = LETTERS[1:4])
 
@@ -506,7 +506,7 @@ horizonplot(paramList)
 
 We can further customize the horizon plot by supplementing a list of aesthetics to the horizonplot() function. We obtain this list by calling the horizonaes() function with the custom aesthetics to override default values. If no custom aesthetics are specified to horizonplot(), default aesthetics will be retrieved by calling horizonaes() with no arguments.
 
-```
+```r
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, taxonomydata = taxonomysample_diet, subj = "MCTs01")
 
 ## Add a title; override x-label, y-label, and legend title defaults; adjust legend position
@@ -516,7 +516,7 @@ horizonplot(paramList, aesthetics = horizonaes(title = "Microbiome Horizon Plot"
 
 ![](assets/pics/plot_horizonaes.png)
 
-```
+```r
 ## Remove a default aesthetic
 horizonplot(paramList, aesthetics = horizonaes(xlabel = NULL))
 ```
@@ -525,16 +525,16 @@ horizonplot(paramList, aesthetics = horizonaes(xlabel = NULL))
 
 We can supply a new color scale for horizon bands as a vector of hexadecimal color codes ordered from the most negative to the most positive band. The length of the vector is equal to 2 * the number of positive bands as specified in prepanel.
 
-```
+```r
 ## How many positive bands?
 paramList[[14]]
 ```
 
-```
+```r
 [1] 4
 ```
 
-```
+```r
 ## Supply custom color scale of length 8
 library(RColorBrewer)
 horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")))
@@ -544,7 +544,7 @@ horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")
 
 Most commonly relevant aesthetics are returned by horizonaes(), but if we want to add other aesthetics not included in this function, we can manually append them to the horizon plot object using ggplot. For example, we can label the x-axis by date.
 
-```
+```r
 ## Label the x-axis by date
 
 paramList <- prepanel(otudata = otusample_baboon, metadata = metadatasample_baboon, subj = "Baboon_388", regularInterval = 25, maxGap = 75)
@@ -563,9 +563,9 @@ horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")
 
 ### Reproducing Plots from the Manuscript
 
-The following code can be used to reproduce all plots shown in the manuscript.
+The following code can be used to reproduce all plots shown in the [manuscript](https://doi.org/10.1101/2021.08.29.458140).
 
-```
+```r
 library(biomehorizon)
 library(dplyr)
 library(cowplot)
