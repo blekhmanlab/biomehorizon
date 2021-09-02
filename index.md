@@ -563,7 +563,7 @@ horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")
 
 ### Reproducing Plots from the Manuscript
 
-The following code can be used to reproduce all plots shown in the manuscript.
+The following code can be used to reproduce all plots shown in the [manuscript](https://doi.org/10.1101/2021.08.29.458140).
 
 ```r
 library(biomehorizon)
