@@ -852,7 +852,7 @@ horizonplot <- function(parameterList, aesthetics=horizonaes()) {
       for(n in (-1*nbands+1):(nbands-1)) {
         bands <- bands + (nums > n*bt)
       }
-      bands <- bands-nbands
+      bands <- as.numeric(bands-nbands)
 
       x <- numeric()
       y <- numeric()
