@@ -259,7 +259,6 @@ otulist = c("taxon 1", "taxon 2", "taxon 10", "taxon 14"))
 After refining the data with `prepanel`, we supply the parameter list to `horizonplot` to construct the horizon plot.
 
 ```r
-
 ## Basic plot using default filtering thresholds
 paramList <- prepanel(otudata = otusample_diet, metadata = metadatasample_diet, subj = "MCTs01")
 
@@ -283,6 +282,15 @@ Note that in the plot with manual selection, microbes are arranged according to 
 Rather than plotting multiple microbes in one subject, we can also plot one microbe to compare the same timepoint across multiple subjects. To use this setting, however, subjects must have the same number of samples collected on the same days. We will subset the diet data set to 6 subjects who were sampled all 17 days of the study.
 
 ```r
+## Subset the data set to the subjects who were sampled on all 17 days, and arrange by date
+metadata_17 <- metadatasample_diet %>%
+  filter(subject %in% c("MCTs08","MCTs18","MCTs23","MCTs26","MCTs33","MCTs36")) %>%
+  arrange(subject, collection_date)
+
+otu_17 <- otusample_diet %>%
+  select(taxon_id, as.character((metadatasample_diet %>% filter(subject %in% 
+  c("MCTs08","MCTs18","MCTs23","MCTs26","MCTs33","MCTs36")))$sample))
+
 ## Single variable analysis with "Taxon 1"
 paramList <- prepanel(otudata = otu_17, metadata = metadata_17, singleVarOTU = "taxon 1", subj = 		
 	c("MCTs08","MCTs18","MCTs23","MCTs26","MCTs36","MCTs33"))
