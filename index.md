@@ -630,7 +630,7 @@ horizonplot(paramList, aesthetics = horizonaes(col.bands = brewer.pal(8, "PiYG")
   ggplot2::scale_x_continuous(expand = c(0,0),
                               breaks = c(500, 600, 700, 800, 1100, 1200, 1300),
                               labels = dateVec) +
-  ggplot2::theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 
 dev.off()
 ```
