@@ -58,7 +58,7 @@ library(biomehorizon)
 ## OTU table format. The first column contains microbial taxon IDs (or OTUs for 16S data), and
 ## all other columns are samples. Values represent sample reads per microbe within a given sample.
 ## Though in this case values are integer sample reads, they can also be represented as
-## proportions or percentages of the total sample.
+## proportions or percentages of the total sample. Columns do not need defined names.
 library(dplyr)
 
 otusample_diet %>%
@@ -80,7 +80,9 @@ otusample_diet %>%
 
 ```r
 ## Metadata format. Must include sample IDs that match the column names of otusample,
-## subject IDs, and collection dates in either date or numeric format.
+## subject IDs, and collection dates in either date or numeric format. 
+## The columns with sample IDs, collection dates and subject names must be named 
+## "sample", "collection_date" and "subject" respectively. 
 head(metadatasample_diet)
 ```
 
@@ -99,7 +101,8 @@ head(metadatasample_diet)
 ## through Genus.
 ## Levels without classification have NA values.
 ## You can supply a vector of strings each with the entire taxonomy of a microbe,
-## with levels separated by semicolons, or a table with columns for each taxonomic level
+## with levels separated by semicolons, or a table with columns for each taxonomic level where the first
+## column is the OTU ID. Columns do not need defined names.
 ## Supports classification up to Subspecies (8 levels)
 head(taxonomysample_diet)
 ```
