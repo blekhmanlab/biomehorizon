@@ -142,8 +142,8 @@
 #'   \code{taxonomydata}. Facets will be labelled using the most specific
 #'   classification available for each OTU. If \code{FALSE} (default), label
 #'   facets by OTU ID.
-#' @param customFacetLabels Use a custom character vector to label facets. Must
-#'   be the same length as the number of OTUs post-filtering, or the number of
+#' @param customFacetLabels Use a custom character vector to label facets. Length
+#'   of this vector should match the number of OTUs post-filtering, or the number of
 #'   subjects if single OTU analysis is enabled. Overrides
 #'   facetLabelsByTaxonomy, but if set to \code{NA} (the default),
 #'   facetLabelsByTaxonomy is used instead.
@@ -542,9 +542,12 @@ prepanel <- function(otudata, metadata=NA, taxonomydata=NA,
       stop("Need `taxonomydata` to label facets by taxonomy")
     }
   }
-  if(length(customFacetLabels) > 1 && length(customFacetLabels) != nrow(otudata)) {
-    warning("customFacetLabels is not the same length as number of OTUs, using default labels.")
+  if(length(customFacetLabels) > 1 && length(customFacetLabels) < nrow(otudata)) {
+    warning("customFacetLabels has length less than the number of OTUs; using default labels.")
     customFacetLabels <- NA
+  } else if(length(customFacetLabels) > nrow(otudata)) {
+    warning("customFacetLabels has length greater than the number of OTUs, so the label vector was truncated.")
+    customFacetLabels <- customFacetLabels[1:nrow(otudata)]
   }
   if(!(class(nbands) %in% c("numeric","integer"))) {
     stop("nbands must be of class numeric or integer")
