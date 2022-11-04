@@ -968,6 +968,10 @@ horizonplot <- function(parameterList, aesthetics=horizonaes()) {
         apply(1,function(x){dplyr::last(x[!is.na(x)])})
     } else {
       facetLabels <- as.character(unique(otudata$otuid))
+      if(any(nchar(facetLabels) > 20)) {
+        warning("One or more OTU IDs have long names; default facet labels will be truncated to 20 characters.")
+        facetLabels <- unname(vapply(facetLabels, {function(s) substring(s,1,20)}, character(1)))
+      }
     }
   }
   names(facetLabels) <- unique(otudata$otuid)
