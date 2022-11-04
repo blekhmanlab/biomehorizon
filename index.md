@@ -280,7 +280,7 @@ horizonplot(paramList)
 
 Note that in the plot with manual selection, microbes are arranged according to their order in otulist. If you want to arrange microbe panels in a specific order, you should use this vector.
 
-> **NOTE**: If you are experiencing issues running the `horizonplot()` command with your own datasets, make sure you are importing your data correctly. Ideally, you should import data as a csv using the `read.csv` command (e.g., `otudata <- read.csv('</path/to/otutable>/<filename>.csv')`).
+> **_NOTE_**: If you are experiencing issues running the `horizonplot()` command with your own datasets, make sure you are importing your data correctly. Ideally, you should import data as a csv using the `read.csv` command (e.g., `otudata <- read.csv('</path/to/otutable>/<filename>.csv')`).
 
 
 ### Plot a Single Microbe Across Multiple Subjects
