@@ -1211,7 +1211,7 @@ horizonaes <- function(title=NA, subtitle=NA, xlabel=NA, ylabel=NA, showColorLeg
       col.bands <- NULL
     }
     if(!is.null(col.bands)) {
-      if(nchar(col.bands)!=7 || substr(col.bands,1,1)!="#") {
+      if(any(nchar(col.bands)!=7 | substr(col.bands,1,1)!="#")) {
         warning("col.bands must be in hexadecimal format. Using a default colorset.")
         col.bands <- NULL
       }
